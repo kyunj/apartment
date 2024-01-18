@@ -1,18 +1,21 @@
-import streamlit as st
-from datetime import date
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib as mp
 import matplotlib.font_manager as fm
+import streamlit as st
+from datetime import date
+
+#fm.get_fontconfig_fonts()
+font_name = fm.FontProperties(fname='C:/Windows/Fonts/batang.ttc').get_name()
+mp.rc('font', family = font_name)
 
 
 sns.set_theme(style='whitegrid', font_scale=1.5)
 sns.set_palette('Set2', n_colors=10)
 plt.rc('font', family='malgun gothic')
 plt.rc('axes', unicode_minus=False)
-
-
 
 #Page Setting
 st.set_page_config(page_title='Apartments Management Price Visualization',
@@ -43,30 +46,31 @@ df['dong'] = dong
 #df.groupby(['gu'])[['cost']].mean().plot()
 
 #side bar
-start_button = st.sidebar.button(
-    "필터 적용📊"
-)
+
 st.sidebar.header('위치 선택')
 
 option01 = st.sidebar.multiselect('구 선택',
                                   df['gu'].unique(),
                                   default = ['강남구'])
-if start_button:
-    df = df[df['gu'].isin(option01)]
+df = df[df['gu'].isin(option01)]
+
 option02 = st.sidebar.multiselect('동 선택',
                                   df['dong'].unique(),
                                   default = ['삼성동'])
-if start_button:
-    df = df[df['dong'].isin(option02)]
+df = df[df['dong'].isin(option02)]
 
 option03 = st.sidebar.slider("최소 평 수", round(df['space'].min()),round(df['space'].max()),(21,38))
 st.sidebar.write("평수는",option03,"사이 입니다")
 
+start_button = st.sidebar.button(
+    "필터 적용📊"
+)
+
 if start_button:
-    df = df[df['space'].between(option03[0],option03[1])]
+    df3 = df[df['space'].between(option03[0],option03[1])]
     st.sidebar.success("필터 적용 되었습니다!")
     st.balloons()
-    st.table(df)
+    st.table(df3)
 import time 
 
 # 방법 1 progress bar 
