@@ -2,15 +2,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import matplotlib as mp
 import matplotlib.font_manager as fm
 import streamlit as st
 from datetime import date
-
-#fm.get_fontconfig_fonts()
-font_name = fm.FontProperties(fname='C:/Windows/Fonts/batang.ttc').get_name()
-mp.rc('font', family = font_name)
-
 
 sns.set_theme(style='whitegrid', font_scale=1.5)
 sns.set_palette('Set2', n_colors=10)
