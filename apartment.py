@@ -54,6 +54,7 @@ df = df[df['dong'].isin(option02)]
 
 option03 = st.sidebar.slider("최소 평 수", round(df['space'].min()),round(df['space'].max()),(21,38))
 st.sidebar.write("평수는",option03,"사이 입니다")
+st.sidebar.write("필터 적용을 눌러야 보입니다!")
 
 start_button = st.sidebar.button(
     "필터 적용📊"
