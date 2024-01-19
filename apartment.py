@@ -14,6 +14,10 @@ plt.rc('axes', unicode_minus=False)
 #Page Setting
 st.set_page_config(page_title='Apartments Management Price Visualization',
                    page_icon='🐋', layout='wide')
+if st.button("새로고침", type = 'secondary'):
+    #새로고침 버튼 만들기
+    st.experimental_rerun()
+
 st.title("Apartments Management Price Visualization")
 #APP_TITLE = 'Apartments Management Price Visualization'
 APP_SUB_TITLE = '단위: 만원'
@@ -22,24 +26,31 @@ APP_SUB_TITLE = '단위: 만원'
 st.caption(APP_SUB_TITLE)
 
 #Data loading & preprocessing
-df = pd.read_csv('OPST.csv', encoding = 'euc-kr')
-df.drop(index = list(df[df['address'] == '0'].index), inplace = True)
-df.drop(index = list(df[df['cost'] == 0].index), inplace = True)
-city,gu,dong = [],[],[]
-for i in df['address']:
-    if i != '0':
-        city.append(i.split()[0])
-        gu.append(i.split()[1])
-        dong.append(i.split()[2])
-    else:
-        continue
-df['city'] = city
-df['gu'] = gu
-df['dong'] = dong
+df = pd.read_csv('OPST_최종.csv', encoding = 'euc-kr')
+#df.drop(index = list(df[df['address'] == '0'].index), inplace = True)
+#df.drop(index = list(df[df['cost'] == 0].index), inplace = True)
+#city,gu,dong = [],[],[]
+#for i in df['address']:
+#    if i != '0':
+#        city.append(i.split()[0])
+#        gu.append(i.split()[1])
+#        dong.append(i.split()[2])
+#    else:
+#        continue
+#df['city'] = city
+#df['gu'] = gu
+#df['dong'] = dong
 
 #df.groupby(['gu'])[['cost']].mean().plot()
 
+
 #side bar
+st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
+
+start_button = st.sidebar.button(
+    "필터 적용📊"
+)
+
 my_df = df
 st.sidebar.header('위치 선택')
 
@@ -61,15 +72,10 @@ if check02:
 else:
     my_df = my_df[my_df['dong'].isin(option02)]
 st.sidebar.header('조건 선택')
-option03 = st.sidebar.slider("최소 평 수", round(my_df['space'].min()),round(my_df['space'].max()),(21,38))
+option03 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(21,38))
 st.sidebar.write("평수는",option03,"사이 입니다")
-st.sidebar.tabs(['가','나','다'])
-
-st.sidebar.write("필터 적용을 눌러야 보입니다!")
-
-start_button = st.sidebar.button(
-    "필터 적용📊"
-)
+option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
+st.sidebar.write(option04)
 
 if start_button:
     my_df = my_df[my_df['space'].between(option03[0],option03[1])]
@@ -87,7 +93,7 @@ for i in range(100):
 # Update the progress bar with each iteration.
     latest_iteration.text(f'Iteration {i+1}')
     bar.progress(i + 1)
-    time.sleep(0.025)
+    time.sleep(0.05)
   # 0.05 초 마다 1씩증가
     #st.balloons()
     # 시간 다 되면 풍선 이펙트 보여주기
@@ -104,5 +110,5 @@ col3.metric(label = '평균 관리비(단위:만원)', value = round(my_df['cost
 
 st.header('1. 가격 현황 분석')
 st.subheader('전체')
-time_frame = st.selectbox("전세/월세/관리비",("전세","월세","관리비"))
+#time_frame = st.selectbox("전세/월세/관리비",("전세","월세","관리비"))
 #whole_values = my_df.groupby(time_frame)[['cost']].sum()
