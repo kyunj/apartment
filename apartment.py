@@ -87,7 +87,7 @@ for i in range(50):
 # Update the progress bar with each iteration.
     latest_iteration.text(f'Iteration {i+1}')
     bar.progress(i + 1)
-    time.sleep(0.05)
+    time.sleep(0.1)
   # 0.05 초 마다 1씩증가
     #st.balloons()
     # 시간 다 되면 풍선 이펙트 보여주기
