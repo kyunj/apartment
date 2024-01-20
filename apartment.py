@@ -72,13 +72,15 @@ if check02:
 else:
     my_df = my_df[my_df['dong'].isin(option02)]
 st.sidebar.header('조건 선택')
-option03 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(21,38))
-st.sidebar.write("평수는",option03,"사이 입니다")
+op1, op2 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(21,38))
+st.sidebar.write("적용되는 평수는",op1,"와",op2,"사이 입니다")
+my_df_2 = my_df[my_df['평수'].between(op1,op2)]
 option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
-st.sidebar.write(option04)
+st.sidebar.write("선택하신 층은 :",option04,"입니다.")
+my_df_2 = my_df_2[my_df_2['floor'] == option04[0]]
 
 if start_button:
-    my_df = my_df[my_df['space'].between(option03[0],option03[1])]
+    my_df = my_df[my_df['평수'].between(op1,op2)]
     st.sidebar.success("필터 적용 되었습니다!")
     st.balloons()
     st.table(my_df)
@@ -100,21 +102,27 @@ for i in range(100):
 
 #Visualization
 st.header('0. Overview')
-col1, col2 = st.columns(2)
+col1, col2,col3 = st.columns(3)
 col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
             delta = round(my_df_1['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
 col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
+col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
+            delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
+if my_df_2.empty:
+    st.warning("해당 조건에 맞는 아파트가 없습니다!")
+    st.warning("조건을 다시 설정 해주세요")
+else:
+    st.subheader('선택한 조건에 맞는 아파트 입니다!')
+    opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df_2['opst'].unique())
 
-st.subheader('선택한 조건에 맞는 아파트 입니다!')
-opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df['opst'].unique())
-opst = my_df[my_df['opst'] == opst_name]
+    opst = my_df_2[my_df_2['opst'] == opst_name]
 
 
-st.text("아파트 이름 : {}".format(opst['opst'].unique()))
-st.text("아파트 평수 : {}".format(opst['평수'].unique()))
-st.text("아파트 층 : {}".format(opst['floor'].unique()))
-st.text("아파트 관리비 : {}".format(opst['cost'].unique()))
-st.table(opst)
+    st.text("아파트 이름 : {}".format(opst['opst'].unique()))
+    st.text("아파트 평수 : {}".format(opst['평수'].unique()))
+    st.text("아파트 층 : {}".format(opst['floor'].unique()))
+    st.text("아파트 관리비 : {}".format(opst['cost'].unique()))
+    st.table(opst)
 #time_frame = st.selectbox("전세/월세/관리비",("전세","월세","관리비"))
 #whole_values = my_df.groupby(time_frame)[['cost']].sum()
