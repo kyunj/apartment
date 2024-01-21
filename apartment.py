@@ -162,7 +162,7 @@ else:
     fig = plt.figure(figsize=(20,10))
     fig = plt.title('아파트 Top 5 평균 관리비(원)')
     ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
-    fig = plt.xticks(rotation=45)
+    fig = plt.xticks(rotation=0)
     fig3_path = "top5_plot.png" 
     plt.savefig(fig3_path)
     plt.close()
