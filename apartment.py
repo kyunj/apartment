@@ -5,7 +5,7 @@ import seaborn as sns
 import streamlit as st
 from datetime import date
 plt.rc('font', family = 'malgun Gothic')
-%matplotlib inline
+#%matplotlib inline
 import warnings
 warnings.filterwarnings("ignore")
 
