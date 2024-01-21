@@ -39,7 +39,7 @@ st.caption(APP_SUB_TITLE)
 
 #Data loading & preprocessing
 df = pd.read_csv('OPST_최종.csv', encoding = 'euc-kr', index_col='Unnamed: 0')
-dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'})
+dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'}).reset_index()
 #df.drop(index = list(df[df['address'] == '0'].index), inplace = True)
 #df.drop(index = list(df[df['cost'] == 0].index), inplace = True)
 #city,gu,dong = [],[],[]
@@ -116,18 +116,41 @@ for i in range(100):
 
 #Visualization
 st.header('0. Overview')
+def first_cost(z):
+    fig = plt.figure(figsize=(20, 10))
+    ax = sns.barplot(x='gu', y='cost', data=z, palette='pastel', errorbar=None)
+    ax = sns.lineplot(x=z['gu'], y=z['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.text('강남구', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
+    fig_path = "first_cost_plot.png"  
+    plt.savefig(fig_path)
+    plt.close() 
+    return fig_path
+
+def first_opst(z):
+    fig1 = plt.figure(figsize=(20, 10))
+    ax1 = sns.barplot(x='gu', y='opst', data=z, palette='pastel', errorbar=None)
+    ax1 = sns.lineplot(x=z['gu'], y=z['opst'].mean(), linewidth=1, color='red', label='서울시 평균 오피스텔 매물 수')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.text('강남구', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
+    fig1_path = "first_opst_plot.png" 
+    plt.savefig(fig1_path)
+    plt.close()  
+    return fig1_path
+
 if my_df.empty:
     st.set_option('deprecation.showPyplotGlobalUse', False)
-    fig = plt.figure(figsize=(20, 10))
-    fig = plt.title('구 별 평균 관리비(원)', pad=10, fontsize=20)
-    ax = sns.barplot(x='gu', y='cost', data=df, palette='pastel', errorbar=None)
-    ax = sns.lineplot(x=df['gu'], y=dff['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
-    fig = plt.legend()
-    fig = plt.xticks(rotation=45)
-    fig = plt.text('강북구', dff['cost'].mean()-2000, '%.0f' % dff['cost'].mean(), ha='right', va='bottom', size=10)
-
-    # Streamlit에 그래프를 표시
-    st.pyplot()
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write('구 별 평균 관리비(월)') 
+        plot_path1 = first_cost(dff)
+        st.image(plot_path1)
+    with col2:
+        st.write('구 별 오피스텔 매물 수')
+        plot_path2 = first_opst(dff)
+        st.image(plot_path2)
 else:  
     col1, col2,col3 = st.columns(3)
     col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
