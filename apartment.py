@@ -108,16 +108,16 @@ for i in range(100):
 #Visualization
 st.header('0. Overview')
 if my_df.empty:
-  plt.figure(figsize = (20,10))
-  plt.title('구 별 평균 관리비(원)', pad = 10, fontsize = 20)
-  fig = sns.barplot(x = 'gu', y = 'cost', data = df, palette = 'pastel', errorbar = None)
-  sns.lineplot(x = df['gu'], y = dff['cost'].mean(), linewidth = 1, color = 'red', label = '서울시 평균 관리비(원)')
-  plt.legend()
-  plt.xticks(rotation = 45)
-  plt.text('강북구',dff['cost'].mean()-2000, '%.0f' %dff['cost'].mean(), ha = 'right', va = 'bottom', size = 10)
-  plt.show()
-  st.pyplot(fig)
-  
+    fig = plt.figure(figsize=(20, 10))
+    plt.title('구 별 평균 관리비(원)', pad=10, fontsize=20)
+    sns.barplot(x='gu', y='cost', data=df, palette='pastel', errorbar=None)
+    sns.lineplot(x=df['gu'], y=dff['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.text('강북구', dff['cost'].mean()-2000, '%.0f' % dff['cost'].mean(), ha='right', va='bottom', size=10)
+
+    # Streamlit에 그래프를 표시
+    st.pyplot()
 else:  
   col1, col2,col3 = st.columns(3)
   col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
