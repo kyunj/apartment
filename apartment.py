@@ -205,7 +205,7 @@ else:
         plt_path3 = st.image(fig3_path)
         col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
                   delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
-        col3.write("조건을 선택해주셔야 보입니다!")
+        col3.warning("조건을 선택해주셔야 보입니다!")
         st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
         opst_name = st.selectbox("원하는 오피스텔을 골라주세요", my_df_2['opst'].unique())
 
