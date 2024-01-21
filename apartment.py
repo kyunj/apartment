@@ -29,7 +29,8 @@ APP_SUB_TITLE = '단위: 만원'
 st.caption(APP_SUB_TITLE)
 
 #Data loading & preprocessing
-df = pd.read_csv('OPST_최종.csv', encoding = 'euc-kr')
+df = pd.read_csv('OPST_최종.csv', encoding = 'euc-kr', index_col='Unnamed: 0')
+dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'})
 #df.drop(index = list(df[df['address'] == '0'].index), inplace = True)
 #df.drop(index = list(df[df['cost'] == 0].index), inplace = True)
 #city,gu,dong = [],[],[]
