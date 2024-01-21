@@ -173,7 +173,7 @@ else:
         def second_cost(z):
             fig = plt.figure(figsize=(20, 10))
             ax = sns.barplot(x='dong', y='cost', data=z, palette='pastel', errorbar=None)
-            ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
+            ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= f"{my_df['gu'].unique()}평균 관리비(원)")
             plt.legend()
             plt.xticks(rotation=45)
             #plt.text('', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
@@ -185,8 +185,7 @@ else:
         def second_opst(z):
             fig1 = plt.figure(figsize=(20, 10))
             ax1 = sns.barplot(x='dong', y='opst', data=z, palette='pastel', errorbar=None)
-            ax1 = sns.lineplot(x=z['dong'], y=z['opst'].count(), linewidth=1, color='red', label='서울시 평균 오피스텔 매물 수')
-            plt.legend()
+            ax1 = sns.lineplot(x=z['dong'], y=z['opst'].count(), linewidth=1, color='red', label=f"{my_df['gu'].unique()}평균 오피스텔 매물 수")
             plt.xticks(rotation=0)
             #plt.text('', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
             fig1_path = "first_opst_plot.png" 
