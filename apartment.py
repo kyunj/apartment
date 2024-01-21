@@ -106,7 +106,7 @@ for i in range(100):
 
 #Visualization
 st.header('0. Overview')
-if df.empty:
+if my_df.empty:
   plt.figure(figsize = (20,10))
   plt.title('구 별 평균 관리비(원)', pad = 10, fontsize = 20)
   sns.barplot(x = 'gu', y = 'cost', data = df, palette = 'pastel', errorbar = None)
@@ -122,12 +122,12 @@ else:
             delta = round(my_df_1['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
   col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
-  col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
-            delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
   if my_df_2.empty:
       st.warning("해당 조건에 맞는 아파트가 없습니다!")
       st.warning("조건을 다시 설정 해주세요")
   else:
+      col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
+                  delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
       st.subheader('선택한 조건에 맞는 아파트 입니다!')
       opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df_2['opst'].unique())
 
