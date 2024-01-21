@@ -65,20 +65,20 @@ dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'}
 my_df = df
 st.sidebar.header('위치 선택')
 
-option01 = st.sidebar.multiselect('구 선택',
+option01 = st.sidebar.selectbox('구 선택',
                                   df['gu'].unique())
-check01 = st.sidebar.checkbox("전체 구 선택", value=False)
-if check01:
-    my_df = df
-else:
-    my_df = df[df['gu'].isin(option01)]
-option02 = st.sidebar.multiselect('동 선택',
+#check01 = st.sidebar.checkbox("전체 구 선택", value=False)
+#if check01:
+#    my_df = df
+#else:
+my_df = df[df['gu'].isin(option01)]
+option02 = st.sidebar.selectbox('동 선택',
                                   my_df['dong'].unique())
-check02 = st.sidebar.checkbox("전체 동 선택", value = False)
-if check02:
-    my_df_1 = my_df
-else:
-    my_df_1 = my_df[my_df['dong'].isin(option02)]
+#check02 = st.sidebar.checkbox("전체 동 선택", value = False)
+#if check02:
+#    my_df_1 = my_df
+#else:
+my_df_1 = my_df[my_df['dong'].isin(option02)]
 st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
 if my_df_1.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
@@ -174,7 +174,7 @@ else:
         def second_opst(z):
             fig1 = plt.figure(figsize=(20, 10))
             ax1 = sns.barplot(x='dong', y='opst' ,data = z.groupby(['dong'])[['opst']].count().reset_index(), palette='pastel', errorbar=None)
-            plt.xticks(rotation=0)
+            plt.xticks(rotation=10)
             fig1_path = "first_opst_plot.png" 
             plt.savefig(fig1_path)
             plt.close()  
@@ -198,7 +198,7 @@ else:
         fig = plt.figure(figsize=(20,10))
         fig = plt.title(f"{my_df_1['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)")
         ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
-        fig = plt.xticks(rotation=30)
+        fig = plt.xticks(rotation=10)
         fig3_path = "top5_plot.png" 
         plt.savefig(fig3_path)
         plt.close()
