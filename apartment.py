@@ -116,27 +116,28 @@ if df.empty:
   plt.text('강북구',dff['cost'].mean()-2000, '%.0f' %dff['cost'].mean(), ha = 'right', va = 'bottom', size = 10)
   plt.show()
   
-col1, col2,col3 = st.columns(3)
-col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
+else:  
+  col1, col2,col3 = st.columns(3)
+  col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
             delta = round(my_df_1['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
-col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
+  col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
-col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
+  col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
             delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
-if my_df_2.empty:
-    st.warning("해당 조건에 맞는 아파트가 없습니다!")
-    st.warning("조건을 다시 설정 해주세요")
-else:
-    st.subheader('선택한 조건에 맞는 아파트 입니다!')
-    opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df_2['opst'].unique())
+  if my_df_2.empty:
+      st.warning("해당 조건에 맞는 아파트가 없습니다!")
+      st.warning("조건을 다시 설정 해주세요")
+  else:
+      st.subheader('선택한 조건에 맞는 아파트 입니다!')
+      opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df_2['opst'].unique())
 
-    opst = my_df_2[my_df_2['opst'] == opst_name]
+      opst = my_df_2[my_df_2['opst'] == opst_name]
 
 
-    st.text("아파트 이름 : {}".format(opst['opst'].unique()))
-    st.text("아파트 평수 : {}".format(opst['평수'].unique()))
-    st.text("아파트 층 : {}".format(opst['floor'].unique()))
-    st.text("아파트 관리비 : {}".format(opst['cost'].unique()))
-    st.table(opst)
+      st.text("아파트 이름 : {}".format(opst['opst'].unique()))
+      st.text("아파트 평수 : {}".format(opst['평수'].unique()))
+      st.text("아파트 층 : {}".format(opst['floor'].unique()))
+      st.text("아파트 관리비 : {}".format(opst['cost'].unique()))
+      st.table(opst)
 #time_frame = st.selectbox("전세/월세/관리비",("전세","월세","관리비"))
 #whole_values = my_df.groupby(time_frame)[['cost']].sum()
