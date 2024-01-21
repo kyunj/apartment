@@ -159,21 +159,11 @@ else:
     col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
     
-    my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
-    fig = plt.figure(figsize=(20,10))
-    fig = plt.title('오피스텔 Top 5 평균 관리비(원)')
-    ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
-    fig = plt.xticks(rotation=0)
-    fig3_path = "top5_plot.png" 
-    plt.savefig(fig3_path)
-    plt.close()
-    plt_path3 = st.image(fig3_path)
-    
     if my_df_1.empty:
         def second_cost(z):
             fig = plt.figure(figsize=(20, 10))
             ax = sns.barplot(x='dong', y='cost', data=z, palette='pastel', errorbar=None)
-            ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= f"{my_df['gu'].unique()}평균 관리비(원)")
+            ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= f"{my_df['gu']}평균 관리비(원)")
             plt.legend()
             plt.xticks(rotation=45)
             plt.text(my_df.index[0], z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
@@ -203,6 +193,15 @@ else:
         st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
     else:
+        my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
+        fig = plt.figure(figsize=(20,10))
+        fig = plt.title('동 별 오피스텔 Top 5 평균 관리비(원)')
+        ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
+        fig = plt.xticks(rotation=30)
+        fig3_path = "top5_plot.png" 
+        plt.savefig(fig3_path)
+        plt.close()
+        plt_path3 = st.image(fig3_path)
         col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
                   delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
         st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
