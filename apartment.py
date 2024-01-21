@@ -180,10 +180,8 @@ else:
         opst = my_df_2[my_df_2['opst'] == opst_name]
 
 
-        st.text("아파트 이름 : {}".format(opst['opst'].unique()))
-        st.text("아파트 평수 : {}".format(opst['평수'].unique()))
-        st.text("아파트 층 : {}".format(opst['floor'].unique()))
-        st.text("아파트 관리비 : {}".format(opst['cost'].unique()))
+        st.text("오피스텔 이름 : {}".format(opst['opst'].unique()))
+        st.text("오피스텔 평수 : {}".format(opst['평수'].unique()))
+        st.text("오피스텔 층 : {}".format(opst['floor'].unique()))
+        st.text("오피스텔텔 관리비 : {}".format(opst['cost'].unique()))
         st.table(opst)
-#time_frame = st.selectbox("전세/월세/관리비",("전세","월세","관리비"))
-#whole_values = my_df.groupby(time_frame)[['cost']].sum()
