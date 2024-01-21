@@ -196,7 +196,7 @@ else:
                 delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
         my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
         fig = plt.figure(figsize=(20,10))
-        fig = plt.title('f"{my_df['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)')
+        fig = plt.title('f"{my_df_2['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)')
         ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
         fig = plt.xticks(rotation=30)
         fig3_path = "top5_plot.png" 
