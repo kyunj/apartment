@@ -163,7 +163,7 @@ else:
     
     my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
     fig = plt.figure(figsize=(20,10))
-    fig = plt.title('오피스 Top 5 평균 관리비(원)')
+    fig = plt.title('오피스텔 Top 5 평균 관리비(원)')
     ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
     fig = plt.xticks(rotation=0)
     fig3_path = "top5_plot.png" 
