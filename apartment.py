@@ -182,13 +182,23 @@ else:
         st.set_option('deprecation.showPyplotGlobalUse', False)
         col1, col2 = st.columns(2)
         with col1:
-            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(원)") 
-            plot_path4 = second_cost(my_df)
-            st.image(plot_path4)
+            if len(option01) == 1:
+                st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(원)") 
+                plot_path4 = second_cost(my_df)
+                st.image(plot_path4)
+            else:
+                st.write('구 별 평균 관리비(월)') 
+                plot_path1 = first_cost(dff)
+                st.image(plot_path1)
         with col2:
-            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 오피스텔 매물 수")
-            plot_path5 = second_opst(my_df)
-            st.image(plot_path5)
+            if len(option01) == 1:
+                st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 오피스텔 매물 수")
+                plot_path5 = second_opst(my_df)
+                st.image(plot_path5)
+            else:
+                st.write('구 별 오피스텔 매물 수')
+                plot_path2 = first_opst(dff)
+                st.image(plot_path2)
         st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
     else:
