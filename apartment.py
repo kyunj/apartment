@@ -165,6 +165,7 @@ else:
     fig = plt.xticks(rotation=45)
     fig3_path = "top5_plot.png" 
     plt.savefig(fig3_path)
+    plt.close()
     plt_path3 = st.image(fig3_path)
     
     st.pyplot(fig)
