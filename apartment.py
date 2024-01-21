@@ -58,11 +58,9 @@ dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'}
 
 
 #side bar
-st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
 
-start_button = st.sidebar.button(
-    "필터 적용📊"
-)
+
+
 
 my_df = df
 st.sidebar.header('위치 선택')
@@ -82,6 +80,7 @@ if check02:
     my_df = my_df
 else:
     my_df = my_df[my_df['dong'].isin(option02)]
+st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
 if my_df.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
 else:
@@ -92,6 +91,10 @@ else:
   option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
   st.sidebar.write("선택하신 층은 ",option04,"입니다.")
   my_df_2 = my_df_2[my_df_2['floor'] == option04[0]]
+
+start_button = st.sidebar.button(
+    "필터 적용📊"
+)
 
 if start_button:
     my_df = my_df[my_df['평수'].between(op1,op2)]
@@ -160,7 +163,7 @@ else:
     
     my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
     fig = plt.figure(figsize=(20,10))
-    fig = plt.title('아파트 Top 5 평균 관리비(원)')
+    fig = plt.title('오피스 Top 5 평균 관리비(원)')
     ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
     fig = plt.xticks(rotation=0)
     fig3_path = "top5_plot.png" 
@@ -169,13 +172,13 @@ else:
     plt_path3 = st.image(fig3_path)
     
     if my_df_2.empty:
-        st.warning("해당 조건에 맞는 아파트가 없습니다!")
+        st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
     else:
         col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
                   delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
-        st.subheader('선택한 조건에 맞는 아파트 입니다!')
-        opst_name = st.selectbox("원하는 아파트를 골라주세요", my_df_2['opst'].unique())
+        st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
+        opst_name = st.selectbox("원하는 오피스텔을 골라주세요", my_df_2['opst'].unique())
 
         opst = my_df_2[my_df_2['opst'] == opst_name]
 
@@ -183,5 +186,5 @@ else:
         st.text("오피스텔 이름 : {}".format(opst['opst'].unique()))
         st.text("오피스텔 평수 : {}".format(opst['평수'].unique()))
         st.text("오피스텔 층 : {}".format(opst['floor'].unique()))
-        st.text("오피스텔텔 관리비 : {}".format(opst['cost'].unique()))
+        st.text("오피스텔 관리비 : {}".format(opst['cost'].unique()))
         st.table(opst)
