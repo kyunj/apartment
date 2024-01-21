@@ -66,7 +66,7 @@ my_df = df
 st.sidebar.header('위치 선택')
 
 option01 = st.sidebar.selectbox('구 선택',
-                                  df['gu'].unique())
+                                  df['gu'].unique(), default = None)
 #check01 = st.sidebar.checkbox("전체 구 선택", value=False)
 #if check01:
 #    my_df = df
