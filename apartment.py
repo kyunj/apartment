@@ -9,10 +9,6 @@ from datetime import date
 
 
 
-font_path = "NanumGothic-Bold.ttf"  # 사용하고자 하는 한글 폰트의 경로를 지정
-font_name = font_manager.FontProperties(fname=font_path).get_name()
-rc('font', family=font_name)
-font_path = os.path.join(os.getcwd(), 'NanumGothic.ttf')
 
 # 한글 폰트 등록
 from matplotlib import font_manager
