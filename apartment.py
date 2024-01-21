@@ -6,17 +6,23 @@ import streamlit as st
 import os
 import matplotlib.font_manager as fm
 from datetime import date
-font_path = "C:\Users\kyj93\Downloads\미래 사회 공모전\Nanum_Gothic.ttf"  # 사용하고자 하는 한글 폰트의 경로를 지정
-font_name = font_manager.FontProperties(fname=font_path).get_name()
-rc('font', family=font_name)
-plt.rc('font', family = 'NanumGothic')
 
+
+
+font_path = os.path.join(os.getcwd(), 'NanumGothic.ttf')
+
+# 한글 폰트 등록
+from matplotlib import font_manager
+font_dirs = [os.getcwd()]
+font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
+for font_file in font_files:
+    font_manager.fontManager.addfont(font_file)
 import warnings
 warnings.filterwarnings("ignore")
 
 sns.set_theme(style='whitegrid', font_scale=1.5)
 sns.set_palette('Set2', n_colors=10)
-plt.rc('font', family='malgun gothic')
+plt.rc('font', family='NanumGothic')
 plt.rc('axes', unicode_minus=False)
 
 #Page Setting
