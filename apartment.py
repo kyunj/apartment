@@ -168,8 +168,6 @@ else:
     plt.close()
     plt_path3 = st.image(fig3_path)
     
-    st.pyplot(fig)
-    
     if my_df_2.empty:
         st.warning("해당 조건에 맞는 아파트가 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
