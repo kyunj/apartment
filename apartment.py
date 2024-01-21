@@ -116,7 +116,7 @@ if my_df.empty:
   plt.xticks(rotation = 45)
   plt.text('강북구',dff['cost'].mean()-2000, '%.0f' %dff['cost'].mean(), ha = 'right', va = 'bottom', size = 10)
   plt.show()
-  st.pyplot()
+  st.pyplot(sns.barplot(x = 'gu', y = 'cost', data = df, palette = 'pastel', errorbar = None))
   
 else:  
   col1, col2,col3 = st.columns(3)
