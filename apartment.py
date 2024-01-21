@@ -10,7 +10,6 @@ from datetime import date
 
 
 
-# 한글 폰트 등록
 from matplotlib import font_manager
 font_dirs = [os.getcwd()]
 font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
