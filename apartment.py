@@ -184,7 +184,7 @@ else:
 
         def second_opst(z):
             fig1 = plt.figure(figsize=(20, 10))
-            ax1 = sns.barplot(x='dong', y='opst', data=z, palette='pastel', errorbar=None)
+            ax1 = sns.barplot(x='dong', y='opst' data = z.groupby(['dong'])[['opst']].count().reset_index(), palette='pastel', errorbar=None)
             plt.xticks(rotation=0)
             fig1_path = "first_opst_plot.png" 
             plt.savefig(fig1_path)
