@@ -143,7 +143,7 @@ else:
         fig = plt.xticks(rotation=45)
         return fig
     
-    st.pyplot(top5(option02)
+    st.pyplot(top5(option02))
     if my_df_2.empty:
         st.warning("해당 조건에 맞는 아파트가 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
