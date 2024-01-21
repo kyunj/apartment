@@ -115,7 +115,7 @@ for i in range(100):
     #st.balloons()
     # 시간 다 되면 풍선 이펙트 보여주기
 
-if (len(option01) == 1) | (len(option02) == 1):
+if (len(option01) == 1) & (len(option02) == 1):
 #Visualization
     st.header('0. Overview')
     def first_cost(z):
