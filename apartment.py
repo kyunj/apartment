@@ -55,8 +55,7 @@ my_df = df
 st.sidebar.header('위치 선택')
 
 option01 = st.sidebar.multiselect('구 선택',
-                                  df['gu'].unique(),
-                                  default = ['강남구'])
+                                  df['gu'].unique())
 check01 = st.sidebar.checkbox("전체 구 선택", value=False)
 if check01:
     my_df = df
@@ -64,8 +63,7 @@ else:
     my_df_1 = df[df['gu'].isin(option01)]
     my_df = my_df_1
 option02 = st.sidebar.multiselect('동 선택',
-                                  my_df['dong'].unique(),
-                                  default = ['삼성동'])
+                                  my_df['dong'].unique())
 check02 = st.sidebar.checkbox("전체 동 선택", value = False)
 if check02:
     my_df = my_df
