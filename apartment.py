@@ -71,23 +71,22 @@ check01 = st.sidebar.checkbox("전체 구 선택", value=False)
 if check01:
     my_df = df
 else:
-    my_df_1 = df[df['gu'].isin(option01)]
-    my_df = my_df_1
+    my_df = df[df['gu'].isin(option01)]
 option02 = st.sidebar.multiselect('동 선택',
                                   my_df['dong'].unique())
 check02 = st.sidebar.checkbox("전체 동 선택", value = False)
 if check02:
-    my_df = my_df
+    my_df_1 = my_df
 else:
-    my_df = my_df[my_df['dong'].isin(option02)]
+    my_df_1 = my_df[my_df['dong'].isin(option02)]
 st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
-if my_df.empty:
+if my_df_1.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
 else:
   st.sidebar.header('조건 선택')
   op1, op2 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(1,1))
   st.sidebar.write("적용되는 평수는",op1,"와",op2,"사이 입니다")
-  my_df_2 = my_df[my_df['평수'].between(op1,op2)]
+  my_df_2 = my_df_1[my_df_1['평수'].between(op1,op2)]
   option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
   st.sidebar.write("선택하신 층은 ",option04,"입니다.")
   my_df_2 = my_df_2[my_df_2['floor'] == option04[0]]
@@ -97,10 +96,9 @@ start_button = st.sidebar.button(
 )
 
 if start_button:
-    my_df = my_df[my_df['평수'].between(op1,op2)]
+    my_df_2 = my_df_2[my_df_2['평수'].between(op1,op2)]
     st.sidebar.success("필터 적용 되었습니다!")
     st.balloons()
-    st.table(my_df)
 
 import time 
 
@@ -171,26 +169,26 @@ else:
     plt.close()
     plt_path3 = st.image(fig3_path)
     
-    if my_df_2.empty:
-        def first_cost(z):
+    if my_df_1.empty:
+        def second_cost(z):
             fig = plt.figure(figsize=(20, 10))
             ax = sns.barplot(x='dong', y='cost', data=z, palette='pastel', errorbar=None)
             ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
             plt.legend()
             plt.xticks(rotation=45)
-            plt.text('강남구', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
+            #plt.text('', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
             fig_path = "first_cost_plot.png"  
             plt.savefig(fig_path)
             plt.close() 
             return fig_path
 
-        def first_opst(z):
+        def second_opst(z):
             fig1 = plt.figure(figsize=(20, 10))
             ax1 = sns.barplot(x='dong', y='opst', data=z, palette='pastel', errorbar=None)
             ax1 = sns.lineplot(x=z['dong'], y=z['opst'].mean(), linewidth=1, color='red', label='서울시 평균 오피스텔 매물 수')
             plt.legend()
             plt.xticks(rotation=45)
-            plt.text('강남구', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
+            #plt.text('', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
             fig1_path = "first_opst_plot.png" 
             plt.savefig(fig1_path)
             plt.close()  
@@ -198,12 +196,12 @@ else:
         st.set_option('deprecation.showPyplotGlobalUse', False)
         col1, col2 = st.columns(2)
         with col1:
-            st.write('구 별 평균 관리비(월)') 
-            plot_path4 = first_cost(my_df)
+            st.write('동 별 평균 관리비(월)') 
+            plot_path4 = second_cost(my_df)
             st.image(plot_path4)
         with col2:
-            st.write('구 별 오피스텔 매물 수')
-            plot_path5 = first_opst(my_df)
+            st.write('동 별 오피스텔 매물 수')
+            plot_path5 = second_opst(my_df)
             st.image(plot_path5)
         st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
