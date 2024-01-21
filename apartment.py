@@ -115,52 +115,52 @@ for i in range(100):
     #st.balloons()
     # 시간 다 되면 풍선 이펙트 보여주기
 
+if (len(option01) == 1) | (len(option02) == 1):
 #Visualization
-st.header('0. Overview')
-def first_cost(z):
-    fig = plt.figure(figsize=(20, 10))
-    ax = sns.barplot(x='gu', y='cost', data=z, palette='pastel', errorbar=None)
-    ax = sns.lineplot(x=z['gu'], y=z['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
-    plt.legend()
-    plt.xticks(rotation=45)
-    plt.text('강남구', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
-    fig_path = "first_cost_plot.png"  
-    plt.savefig(fig_path)
-    plt.close() 
-    return fig_path
+    st.header('0. Overview')
+    def first_cost(z):
+        fig = plt.figure(figsize=(20, 10))
+        ax = sns.barplot(x='gu', y='cost', data=z, palette='pastel', errorbar=None)
+        ax = sns.lineplot(x=z['gu'], y=z['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
+        plt.legend()
+        plt.xticks(rotation=45)
+        plt.text('강남구', z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
+        fig_path = "first_cost_plot.png"  
+        plt.savefig(fig_path)
+        plt.close() 
+        return fig_path
 
-def first_opst(z):
-    fig1 = plt.figure(figsize=(20, 10))
-    ax1 = sns.barplot(x='gu', y='opst', data=z, palette='pastel', errorbar=None)
-    ax1 = sns.lineplot(x=z['gu'], y=z['opst'].count(), linewidth=1, color='red', label='서울시 평균 오피스텔 매물 수')
-    plt.legend()
-    plt.xticks(rotation=45)
-    plt.text('강남구', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
-    fig1_path = "first_opst_plot.png" 
-    plt.savefig(fig1_path)
-    plt.close()  
-    return fig1_path
+    def first_opst(z):
+        fig1 = plt.figure(figsize=(20, 10))
+        ax1 = sns.barplot(x='gu', y='opst', data=z, palette='pastel', errorbar=None)
+        ax1 = sns.lineplot(x=z['gu'], y=z['opst'].count(), linewidth=1, color='red', label='서울시 평균 오피스텔 매물 수')
+        plt.legend()
+        plt.xticks(rotation=45)
+        plt.text('강남구', z['opst'].mean(), '%.0f' % z['opst'].mean(), ha='right', va='bottom', size=10)
+        fig1_path = "first_opst_plot.png" 
+        plt.savefig(fig1_path)
+        plt.close()  
+        return fig1_path
 
-if my_df.empty:
-    st.set_option('deprecation.showPyplotGlobalUse', False)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.write('구 별 평균 관리비(월)') 
-        plot_path1 = first_cost(dff)
-        st.image(plot_path1)
-    with col2:
-        st.write('구 별 오피스텔 매물 수')
-        plot_path2 = first_opst(dff)
-        st.image(plot_path2)
-else:  
-    col1, col2,col3 = st.columns(3)
-    col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
-            delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
+    if my_df.empty:
+        st.set_option('deprecation.showPyplotGlobalUse', False)
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write('구 별 평균 관리비(월)') 
+            plot_path1 = first_cost(dff)
+            st.image(plot_path1)
+        with col2:
+            st.write('구 별 오피스텔 매물 수')
+            plot_path2 = first_opst(dff)
+            st.image(plot_path2)
+    else:  
+        col1, col2,col3 = st.columns(3)
+        col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
+                delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
     
     
-    if my_df_1.empty:
-        def second_cost(z,option01):
-            if len(option01) == 1:
+        if my_df_1.empty:
+            def second_cost(z,option01):
                 fig = plt.figure(figsize=(20, 10))
                 ax = sns.barplot(x='dong', y='cost', data=z.groupby(['dong'])[['cost']].mean().reset_index(), palette='pastel', errorbar=None)
                 ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= f"{my_df['gu'].unique().reshape(1,1)[0][0]} 평균 관리비(원)")
@@ -171,71 +171,54 @@ else:
                 plt.savefig(fig_path)
                 plt.close() 
                 return fig_path
-            else:
-                fig = plt.figure(figsize=(20, 10))
-                ax = sns.lineplot(x='dong', y='cost', data=z.groupby(['dong'])[['cost']].mean().reset_index(),hue = 'gu', palette='pastel', errorbar=None)
-                ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= "해당 구 별 평균 관리비(원)")
-                plt.legend()
-                plt.xticks(rotation=45)
-                plt.text(my_df.index[0], z['cost'].mean() - 2000, '%.0f' % z['cost'].mean(), ha='right', va='bottom', size=10)
-                fig_path = "first_cost_plot.png"  
-                plt.savefig(fig_path)
-                plt.close() 
-                return fig_path
-
-        def second_opst(z):
-            fig1 = plt.figure(figsize=(20, 10))
-            ax1 = sns.barplot(x='dong', y='opst' ,data = z.groupby(['dong'])[['opst']].count().reset_index(), palette='pastel', errorbar=None)
-            plt.xticks(rotation=10)
-            fig1_path = "first_opst_plot.png" 
-            plt.savefig(fig1_path)
-            plt.close()  
-            return fig1_path
-        st.set_option('deprecation.showPyplotGlobalUse', False)
-        col1, col2 = st.columns(2)
-        with col1:
-            if len(option01) == 1:
+            
+            def second_opst(z):
+                fig1 = plt.figure(figsize=(20, 10))
+                ax1 = sns.barplot(x='dong', y='opst' ,data = z.groupby(['dong'])[['opst']].count().reset_index(), palette='pastel', errorbar=None)
+                plt.xticks(rotation=10)
+                fig1_path = "first_opst_plot.png" 
+                plt.savefig(fig1_path)
+                plt.close()  
+                return fig1_path
+            st.set_option('deprecation.showPyplotGlobalUse', False)
+            col1, col2 = st.columns(2)
+            with col1:
                 st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(원)") 
                 plot_path4 = second_cost(my_df)
                 st.image(plot_path4)
-            else:
-                st.write('구 별 평균 관리비(월)') 
-                plot_path1 = first_cost(dff)
-                st.image(plot_path1)
-        with col2:
-            if len(option01) == 1:
+            
+            with col2:
                 st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 오피스텔 매물 수")
                 plot_path5 = second_opst(my_df)
                 st.image(plot_path5)
-            else:
-                st.write('구 별 오피스텔 매물 수')
-                plot_path2 = first_opst(dff)
-                st.image(plot_path2)
-        st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
-        st.warning("조건을 다시 설정 해주세요")
-    else:
-        col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
-                delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
-        my_agg = my_df_1.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
-        fig = plt.figure(figsize=(20,10))
-        fig = plt.title(f"{my_df_1['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)")
-        ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
-        fig = plt.xticks(rotation=10)
-        fig3_path = "top5_plot.png" 
-        plt.savefig(fig3_path)
-        plt.close()
-        plt_path3 = st.image(fig3_path)
-        col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
-                  delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
-        col3.warning("조건을 선택해주셔야 보입니다!")
-        st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
-        opst_name = st.selectbox("원하는 오피스텔을 골라주세요", my_df_2['opst'].unique())
+            
+            st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
+            st.warning("조건을 다시 설정 해주세요")
+        else:
+            col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
+                    delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
+            my_agg = my_df_1.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
+            fig = plt.figure(figsize=(20,10))
+            fig = plt.title(f"{my_df_1['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)")
+            ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
+            fig = plt.xticks(rotation=10)
+            fig3_path = "top5_plot.png" 
+            plt.savefig(fig3_path)
+            plt.close()
+            plt_path3 = st.image(fig3_path)
+            col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
+                      delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
+            col3.warning("조건을 선택해주셔야 보입니다!")
+            st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
+            opst_name = st.selectbox("원하는 오피스텔을 골라주세요", my_df_2['opst'].unique())
 
-        opst = my_df_2[my_df_2['opst'] == opst_name]
+            opst = my_df_2[my_df_2['opst'] == opst_name]
 
 
-        st.text("오피스텔 이름 : {}".format(opst['opst'].unique()))
-        st.text("오피스텔 평수 : {}".format(opst['평수'].unique()))
-        st.text("오피스텔 층 : {}".format(opst['floor'].unique()))
-        st.text("오피스텔 관리비 : {}".format(opst['cost'].unique()))
-        st.table(opst)
+            st.text("오피스텔 이름 : {}".format(opst['opst'].unique()))
+            st.text("오피스텔 평수 : {}".format(opst['평수'].unique()))
+            st.text("오피스텔 층 : {}".format(opst['floor'].unique()))
+            st.text("오피스텔 관리비 : {}".format(opst['cost'].unique()))
+            st.table(opst)
+else:
+    st.warning("하나만 선택해주세요")
