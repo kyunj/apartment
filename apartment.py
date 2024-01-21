@@ -5,7 +5,7 @@ import seaborn as sns
 import streamlit as st
 from datetime import date
 plt.rc('font', family = 'malgun Gothic')
-#%matplotlib inline
+%matplotlib inline
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -108,6 +108,7 @@ for i in range(100):
 #Visualization
 st.header('0. Overview')
 if my_df.empty:
+    st.set_option('deprecation.showPyplotGlobalUse', False)
     fig = plt.figure(figsize=(20, 10))
     fig = plt.title('구 별 평균 관리비(원)', pad=10, fontsize=20)
     ax = sns.barplot(x='gu', y='cost', data=df, palette='pastel', errorbar=None)
