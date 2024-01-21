@@ -108,13 +108,14 @@ for i in range(100):
 #Visualization
 st.header('0. Overview')
 if my_df.empty:
-  fig = plt.figure(figsize = (20,10))
+  plt.figure(figsize = (20,10))
   plt.title('구 별 평균 관리비(원)', pad = 10, fontsize = 20)
   sns.barplot(x = 'gu', y = 'cost', data = df, palette = 'pastel', errorbar = None)
   sns.lineplot(x = df['gu'], y = dff['cost'].mean(), linewidth = 1, color = 'red', label = '서울시 평균 관리비(원)')
   plt.legend()
   plt.xticks(rotation = 45)
   plt.text('강북구',dff['cost'].mean()-2000, '%.0f' %dff['cost'].mean(), ha = 'right', va = 'bottom', size = 10)
+  fig = plt.show()
   st.pyplot(fig)
   
 else:  
