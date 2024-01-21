@@ -6,22 +6,9 @@ import streamlit as st
 import os
 import matplotlib.font_manager as fm
 from datetime import date
-def unique(list):
-    x = np.array(list)
-    return np.unique(x)
-
-@st.cache_data
-def fontRegistered():
-    font_dirs = [os.getcwd() + '/customFonts']
-    font_files = fm.findSystemFonts(fontpaths=font_dirs)
-
-    for font_file in font_files:
-        fm.fontManager.addfont(font_file)
-    fm._load_fontmanager(try_read_cache=False)
-fontRegistered()
-fontNames = [f.name for f in fm.fontManager.ttflist]
-fontname = st.selectbox("폰트 선택", unique(fontNames))
-
+font_path = "C:\Users\kyj93\Downloads\미래 사회 공모전\Nanum_Gothic.ttf"  # 사용하고자 하는 한글 폰트의 경로를 지정
+font_name = font_manager.FontProperties(fname=font_path).get_name()
+rc('font', family=font_name)
 plt.rc('font', family = 'NanumGothic')
 
 import warnings
