@@ -30,7 +30,7 @@ if st.button("새로고침", type = 'secondary'):
     #새로고침 버튼 만들기
     st.experimental_rerun()
 
-st.title("Apartments Management Price Visualization")
+st.title("Opst Management Price Visualization")
 #APP_TITLE = 'Apartments Management Price Visualization'
 APP_SUB_TITLE = '단위: 만원'
 #st.set_page_config(APP_TITLE)
