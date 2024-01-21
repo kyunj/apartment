@@ -65,20 +65,20 @@ dff = df.groupby(['gu']).agg({'cost' : 'mean', 'opst':'count','평수':'median'}
 my_df = df
 st.sidebar.header('위치 선택')
 
-option01 = st.sidebar.selectbox('구 선택',
-                                  df['gu'].unique(), default = None)
-#check01 = st.sidebar.checkbox("전체 구 선택", value=False)
-#if check01:
-#    my_df = df
-#else:
-my_df = df[df['gu'] == option01]
-option02 = st.sidebar.selectbox('동 선택',
+option01 = st.sidebar.multiselect('구 선택',
+                                  df['gu'].unique())
+check01 = st.sidebar.checkbox("전체 구 선택", value=False)
+if check01:
+    my_df = df
+else:
+    my_df = df[df['gu'].isin(option01)]
+option02 = st.sidebar.multiselect('동 선택',
                                   my_df['dong'].unique())
-#check02 = st.sidebar.checkbox("전체 동 선택", value = False)
-#if check02:
-#    my_df_1 = my_df
-#else:
-my_df_1 = my_df[my_df['dong'] == option02]
+check02 = st.sidebar.checkbox("전체 동 선택", value = False)
+if check02:
+    my_df_1 = my_df
+else:
+    my_df_1 = my_df[my_df['dong'].isin(option02)]
 st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
 if my_df_1.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
