@@ -69,13 +69,16 @@ if check02:
     my_df = my_df
 else:
     my_df = my_df[my_df['dong'].isin(option02)]
-st.sidebar.header('조건 선택')
-op1, op2 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(21,38))
-st.sidebar.write("적용되는 평수는",op1,"와",op2,"사이 입니다")
-my_df_2 = my_df[my_df['평수'].between(op1,op2)]
-option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
-st.sidebar.write("선택하신 층은 ",option04,"입니다.")
-my_df_2 = my_df_2[my_df_2['floor'] == option04[0]]
+if my_df.empty:
+  st.sidebar.write("조건을 선택할 수 없습니다!")
+else:
+  st.sidebar.header('조건 선택')
+  op1, op2 = st.sidebar.slider("최소 평 수", round(my_df['평수'].min()),round(my_df['평수'].max()),(21,38))
+  st.sidebar.write("적용되는 평수는",op1,"와",op2,"사이 입니다")
+  my_df_2 = my_df[my_df['평수'].between(op1,op2)]
+  option04 = st.sidebar.radio("원하는 층 선택",['고층','중층','저층'])
+  st.sidebar.write("선택하신 층은 ",option04,"입니다.")
+  my_df_2 = my_df_2[my_df_2['floor'] == option04[0]]
 
 if start_button:
     my_df = my_df[my_df['평수'].between(op1,op2)]
