@@ -114,7 +114,7 @@ if my_df.empty:
     ax = sns.lineplot(x=df['gu'], y=dff['cost'].mean(), linewidth=1, color='red', label='서울시 평균 관리비(원)')
     fig = plt.legend()
     fig = plt.xticks(rotation=45)
-    fig = plt.text('강북구', dff['cost'].mean()-2000, '%.0f' % dff['cost'].mean(), ha='right', va='bottom', size=10)
+    #fig = plt.text('강북구', dff['cost'].mean()-2000, '%.0f' % dff['cost'].mean(), ha='right', va='bottom', size=10)
 
     # Streamlit에 그래프를 표시
     st.pyplot(fig)
