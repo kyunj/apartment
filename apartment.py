@@ -24,7 +24,7 @@ plt.rc('font', family='NanumGothic')
 plt.rc('axes', unicode_minus=False)
 
 #Page Setting
-st.set_page_config(page_title='Apartments Management Price Visualization',
+st.set_page_config(page_title='OPST Management Price Visualization',
                    page_icon='🐋', layout='wide')
 if st.button("새로고침", type = 'secondary'):
     #새로고침 버튼 만들기
