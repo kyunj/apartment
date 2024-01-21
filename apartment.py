@@ -154,10 +154,9 @@ if my_df.empty:
         st.image(plot_path2)
 else:  
     col1, col2,col3 = st.columns(3)
-    col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
-            delta = round(my_df_1['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
-    col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
-            delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
+    col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
+            delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
+    
     
     if my_df_1.empty:
         def second_cost(z):
@@ -183,7 +182,7 @@ else:
         st.set_option('deprecation.showPyplotGlobalUse', False)
         col1, col2 = st.columns(2)
         with col1:
-            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(월)") 
+            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비()") 
             plot_path4 = second_cost(my_df)
             st.image(plot_path4)
         with col2:
@@ -193,6 +192,8 @@ else:
         st.warning("해당 조건에 맞는 오피스텔이 없습니다!")
         st.warning("조건을 다시 설정 해주세요")
     else:
+        col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df_1['cost'].mean() / 10000, 3),
+                delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
         my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
         fig = plt.figure(figsize=(20,10))
         fig = plt.title('동 별 오피스텔 Top 5 평균 관리비(원)')
