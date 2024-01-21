@@ -162,7 +162,7 @@ else:
     if my_df_1.empty:
         def second_cost(z):
             fig = plt.figure(figsize=(20, 10))
-            ax = sns.barplot(x='dong', y='cost', data=z, palette='pastel', errorbar=None)
+            ax = sns.barplot(x='dong', y='cost', data=z.groupby(['dong'])[['cost']].mean().reset_index(), palette='pastel', errorbar=None)
             ax = sns.lineplot(x=z['dong'], y=z['cost'].mean(), linewidth=1, color='red', label= f"{my_df['gu'].unique().reshape(1,1)[0][0]} 평균 관리비(원)")
             plt.legend()
             plt.xticks(rotation=45)
