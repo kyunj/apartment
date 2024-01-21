@@ -182,7 +182,7 @@ else:
         st.set_option('deprecation.showPyplotGlobalUse', False)
         col1, col2 = st.columns(2)
         with col1:
-            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비()") 
+            st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(원)") 
             plot_path4 = second_cost(my_df)
             st.image(plot_path4)
         with col2:
@@ -196,7 +196,7 @@ else:
                 delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
         my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
         fig = plt.figure(figsize=(20,10))
-        fig = plt.title('동 별 오피스텔 Top 5 평균 관리비(원)')
+        fig = plt.title('f"{my_df['dong'].unique().reshape(1,1)[0][0]} 별 오피스텔 Top 5 평균 관리비(원)')
         ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
         fig = plt.xticks(rotation=30)
         fig3_path = "top5_plot.png" 
@@ -205,6 +205,7 @@ else:
         plt_path3 = st.image(fig3_path)
         col3.metric(label = '조건에 맞는 관리비 평균(단위:만원)', value = round(my_df_2['cost'].mean() / 10000, 3),
                   delta = round(my_df_2['cost'].mean() / 10000 - my_df['cost'].mean() / 10000, 3))
+        col3.write("조건을 선택해주셔야 보입니다!")
         st.subheader('선택한 조건에 맞는 오피스텔 입니다!')
         opst_name = st.selectbox("원하는 오피스텔을 골라주세요", my_df_2['opst'].unique())
 
