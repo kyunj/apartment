@@ -135,7 +135,7 @@ else:
     col2.metric(label = '동 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000, 3))
     
-    my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(top)
+    my_agg = my_df.groupby(['opst'])[['cost']].mean().reset_index().sort_values('cost', ascending=False).head(5)
     fig = plt.figure(figsize=(20,10))
     fig = plt.title('아파트 Top 5 평균 관리비(원)')
     ax = sns.barplot(x='opst', y='cost', data=my_agg, palette='pastel')
