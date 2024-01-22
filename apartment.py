@@ -114,6 +114,7 @@ for i in range(100):
   # 0.05 초 마다 1씩증가
     #st.balloons()
     # 시간 다 되면 풍선 이펙트 보여주기
+
 def first_cost(z):
     fig = plt.figure(figsize=(20, 10))
     ax = sns.barplot(x='gu', y='cost', data=z, palette='pastel', errorbar=None)
@@ -158,7 +159,8 @@ def second_opst(z):
     plt.close()  
     return fig1_path
             
-st.header(0. Overview')
+
+st.header('0. Overview')
 
 #Visualization
 if len(option01) == 0:
