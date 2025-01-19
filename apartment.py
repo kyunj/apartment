@@ -26,9 +26,9 @@ plt.rc('axes', unicode_minus=False)
 #Page Setting
 st.set_page_config(page_title='OPST Management Price Visualization',
                    page_icon='🐋', layout='wide')
-if st.button("새로고침", type = 'secondary'):
-    #새로고침 버튼 만들기
-    st.experimental_rerun()
+#if st.button("새로고침", type = 'secondary'):
+#    #새로고침 버튼 만들기
+#    st.experimental_rerun()
 
 st.title("Opst Management Price Visualization")
 #APP_TITLE = 'Apartments Management Price Visualization'
@@ -79,7 +79,7 @@ if check02:
     my_df_1 = my_df
 else:
     my_df_1 = my_df[my_df['dong'].isin(option02)]
-st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
+#st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
 if my_df_1.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
 else:
