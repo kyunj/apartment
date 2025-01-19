@@ -181,7 +181,7 @@ else:
     col1.metric(label = '구 평균 관리비(단위:만원)', value = round(my_df['cost'].mean() / 10000, 3),
             delta = round(my_df['cost'].mean() / 10000 - df['cost'].mean() / 10000 , 3))
     if len(option02) == 0:
-        st.set_option('deprecation.showPyplotGlobalUse', False)
+        #st.set_option('deprecation.showPyplotGlobalUse', False)
         col1, col2 = st.columns(2)
         with col1:
             st.write(f"{my_df['gu'].unique().reshape(1,1)[0][0]}에 속하는 동 별 평균 관리비(원)") 
