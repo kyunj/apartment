@@ -80,6 +80,7 @@ if check02:
 else:
     my_df_1 = my_df[my_df['dong'].isin(option02)]
 #st.sidebar.warning("🚨필터 적용을 눌러야 보입니다!")
+st.sidebar.warning("🚨2023년 12월 기준입니다!")
 if my_df_1.empty:
   st.sidebar.write("조건을 선택할 수 없습니다!")
 else:
